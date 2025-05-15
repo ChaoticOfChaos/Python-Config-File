@@ -40,9 +40,11 @@ def postVariable(newVariables: dict, configFilePath="./.config.conf")->None:
     for key, value in newVariables.items():
         content += key + "=" + value + "\n"
 
-    with open("t.conf", 'w') as newFile:
+    with open(configFilePath, 'w') as newFile:
         newFile.write(content)
 
 if __name__ == '__main__':
     # Just a Example
+    print(getConfs())
+    postCommentary("New Var")
     postVariable({"varX": "18"})
