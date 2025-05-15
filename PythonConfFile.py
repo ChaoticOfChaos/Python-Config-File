@@ -24,6 +24,25 @@ def getConfs(configFilePath="./.config.conf", commentary="#")->dict:
 
     return configContent
 
+def postCommentary(newCommentary, configFilePath="./.config.conf", commentary="#")->None:
+    with open(configFilePath, 'r') as oldFile:
+        content = oldFile.read()
+
+    content += f"\n# {newCommentary}\n"
+
+    with open(configFilePath, 'w') as newFile:
+        newFile.write(content)
+
+def postVariable(newVariables: dict, configFilePath="./.config.conf")->None:
+    with open(configFilePath, 'r') as oldFile:
+        content = oldFile.read()
+
+    for key, value in newVariables.items():
+        content += key + "=" + value + "\n"
+
+    with open("t.conf", 'w') as newFile:
+        newFile.write(content)
+
 if __name__ == '__main__':
     # Just a Example
-    print(getConfs())
+    postVariable({"varX": "18"})
