@@ -28,23 +28,27 @@ def postCommentary(newCommentary, configFilePath="./.config.conf", commentary="#
     with open(configFilePath, 'r') as oldFile:
         content = oldFile.read()
 
-    content += f"\n# {newCommentary}\n"
+    content += f"\n{commentary} {newCommentary}\n"
 
     with open(configFilePath, 'w') as newFile:
         newFile.write(content)
 
-def postVariable(newVariables: dict, configFilePath="./.config.conf")->None:
-    with open(configFilePath, 'r') as oldFile:
-        content = oldFile.read()
-
+def postVariable(newVariables: dict, configFilePath="./.config.conf", commentary="#")->None:
+    strFinal = ""
+    oldVars = getConfs(configFilePath)
+    
     for key, value in newVariables.items():
-        content += key + "=" + value + "\n"
+        oldVars[key] = value
 
-    with open(configFilePath, 'w') as newFile:
-        newFile.write(content)
+    for key, value in oldVars.items():
+        strFinal += key + '=' + value + '\n'
+
+    with open(configFilePath, 'w') as confFile:
+        confFile.write(strFinal)
+    
 
 if __name__ == '__main__':
     # Just a Example
+    postVariable({"var1": "18"})
+    postCommentary("Hello World")
     print(getConfs())
-    postCommentary("New Var")
-    postVariable({"varX": "18"})
